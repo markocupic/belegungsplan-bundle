@@ -21,6 +21,14 @@
 				<source>Create and manage holidays</source>
 				<target>Feiertage anlegen und verwalten</target>
 			</trans-unit>
+			<trans-unit id="MOD.belegungsinfo.0">
+				<source>Info</source>
+				<target>Info</target>
+			</trans-unit>
+			<trans-unit id="MOD.belegungsinfo.1">
+				<source>Information about the Belegungsplan-Bundle for Contao</source>
+				<target>Informationen zum Belegungsplan-Bundle für Contao</target>
+			</trans-unit>
 			<trans-unit id="MOD.tl_belegungsplan_feiertage">
 				<source>Holidays</source>
 				<target>Feiertage</target>
