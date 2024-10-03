@@ -60,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_showAusgabe'] = array(
 	'reference'				=> &$GLOBALS['TL_LANG']['tl_module'],
 	'explanation'			=> 'belegungsplan_showAusgabe',
 	'eval'					=> array('mandatory'=>true, 'submitOnChange'=>true, 'tl_class'=>'w50', 'style'=>'margin:10px', 'helpwizard'=>true),
-	'sql'					=> "varchar(11) NOT NULL default ''"
+	'sql'					=> "varchar(11) NOT NULL default 'standard'"
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_month'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_month'],
