@@ -1,6 +1,6 @@
 # Contao Belegungsplan-Bundle Changelog
 
-### v4.0.0 Stable ()
+### v4.0.0 Stable (03.10.2024)
 #### Anzeige-Einstellungen
 - Auswahlmöglichkeit Standard nach Belegzeiten, Ausgabe nach Anzahl von Monaten, Ausgabe nach individuellem Zeitraum
 - Je nach Auswahl Monatsliste, Eingabe Monatsanzahl oder Eingabe Zeitraum für Start und Ende der Anzeige
