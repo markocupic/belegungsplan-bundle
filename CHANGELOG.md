@@ -1,5 +1,37 @@
 # Contao Belegungsplan-Bundle Changelog
 
+### v4.0.0 Stable ()
+#### Anzeige-Einstellungen
+- Auswahlmöglichkeit Standard nach Belegzeiten, Ausgabe nach Anzahl von Monaten, Ausgabe nach individuellem Zeitraum
+- Je nach Auswahl Monatsliste, Eingabe Monatsanzahl oder Eingabe Zeitraum für Start und Ende der Anzeige
+- dafür Anpassungen in den Templates, Sprachenfiles, Datenbank
+- Änderung der Breiten der Eingabefelder
+#### Eigener Text
+- Link-Einstellungen Linkfarbe, Farbtransparenz, text-decoration, text-decoration-style hinzugefügt
+#### Erstellung Kategorie
+- Kategorienamen können jetzt verlinkt werden
+- target-Attribut anpassbar
+- individuelles title-Attribut möglich
+- separate ID und Klasse kann vergeben werden
+- Author kein Pflichtfeld mehr
+- dafür Anpassungen in den Templates, Sprachenfiles, Datenbank
+#### Erstellung Objekt
+- Objektnamen können jetzt verlinkt werden
+- Infotext kann optional im Frontend angezeigt werden oder nur im Backend
+- target-Attribut anpassbar
+- individuelles title-Attribut möglich
+- separate ID und Klasse kann vergeben werden
+- Author kein Pflichtfeld mehr
+- dafür Anpassungen in den Templates, Sprachenfiles, Datenbank
+#### Erstellung Belegungszeit
+- Author kein Pflichtfeld mehr
+#### Erstellung Feiertag
+- Name des Feiertag als title-Attribut verwendbar
+- Author kein Pflichtfeld mehr
+- dafür Anpassungen in den Templates, Sprachenfiles, Datenbank
+### Sonstiges
+-Unterstützung von PHP 5 wird eingestellt
+
 ### v3.0.1 Stable (08.07.2022)
 - Installation unter PHP 8.0 und höher jetzt möglich
 
