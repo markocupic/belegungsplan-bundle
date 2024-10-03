@@ -24,6 +24,33 @@ $GLOBALS['TL_LANG']['XPL'] = array(
 													array('Ausgabe im Template<span style="color:rgba(255,0,0,1.0);">*</span>:', '<code class="language-php">rgba(51,51,51,1.0)</code><br><br><span style="color:rgba(255,0,0,1.0);">*</span><code class="language-php">&nbsp;51,51,51</code> steht in diesem Fall für die Farbe und <code class="language-php">1.0</code> für die Transparenz der Farbe.<br>Diese Werte können je nach gewählter Farbe und Transparenz von dem hier gezeigten Beispiel abweichen.'),
 													array('Das ändern Sie mit dieser Einstellung:', '<img src="bundles/mailwurmbelegungsplan/Text-Belegungsplan.gif" alt="">')
 												),
+	'belegungsplan_color_linkText'			=> array(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;RgbaLinkText ?&gt;</code>'),
+													array('Ausgabe im Template<span style="color:rgba(255,0,0,1.0);">*</span>:', '<code class="language-php">rgba(102,16,242,1.0)</code><br><br><span style="color:rgba(255,0,0,1.0);">*</span><code class="language-php">&nbsp;102,16,242</code> steht in diesem Fall für die Farbe und <code class="language-php">1.0</code> für die Transparenz der Farbe.<br>Diese Werte können je nach gewählter Farbe und Transparenz von dem hier gezeigten Beispiel abweichen.'),
+												),
+	'belegungsplan_anzeige_linkText'		=> array(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;LinkText ?&gt;</code>'),
+													array('Ausgabe im Template:', '<code class="language-php">true</code> oder <code class="language-php">false</code>')
+												),
+	'belegungsplan_textDecorationLine'		=> array(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;TextDecorationLine ?&gt;</code>'),
+													array('Ausgabe im Template:', '<code class="language-php">text-decoration: none;</code> <br> <code class="language-php">text-decoration: underline;</code> <br> <code class="language-php">text-decoration: overline;</code> <br> <code class="language-php">text-decoration: line-through;</code> <br> <code class="language-php">text-decoration: underline overline;</code> <br> <code class="language-php">text-decoration: underline overline line-through;</code>'),
+													array('none', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-None.jpg" alt="">'),
+													array('underline', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Underline.jpg" alt="">'),
+													array('overline', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Overline.jpg" alt="">'),
+													array('line-through', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Line-Through.jpg" alt="">'),
+													array('underline overline', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Underline-Overline.jpg" alt="">'),
+													array('underline overline line-through', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Underline-Overline-Line-Through.jpg" alt="">')
+												),
+	'belegungsplan_textDecorationStyle'		=> array(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;TextDecorationStyle ?&gt;</code>'),
+													array('Ausgabe im Template<span style="color:rgba(255,0,0,1.0);">*</span>:', '<code class="language-php">text-decoration-style: solid;</code> <br> <code class="language-php">text-decoration-style: double;</code> <br> <code class="language-php">text-decoration-style: dotted;</code> <br> <code class="language-php">text-decoration-style: dashed;</code> <br> <code class="language-php">text-decoration-style: wavy;</code><br><br><span style="color:rgba(255,0,0,1.0);">*</span> Wird nur ausgegeben, wenn <code>text-decoration</code> nicht auf <code>none</code> eingestellt ist.'),
+													array('solid', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Solid.jpg" alt="">'),
+													array('double', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Double.jpg" alt="">'),
+													array('dotted', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Dotted.jpg" alt="">'),
+													array('dashed', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Dashed.jpg" alt="">'),
+													array('wavy', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Wavy.jpg" alt="">')
+												),
 	'belegungsplan_color_rahmen'			=> array(
 													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;RgbaRahmen ?&gt;</code>'),
 													array('Ausgabe im Template<span style="color:rgba(255,0,0,1.0);">*</span>:', '<code class="language-php">rgba(204,204,204,1.0)</code><br><br><span style="color:rgba(255,0,0,1.0);">*</span><code class="language-php">&nbsp;204,204,204</code> steht in diesem Fall für die Farbe und <code class="language-php">1.0</code> für die Transparenz der Farbe.<br>Diese Werte können je nach gewählter Farbe und Transparenz von dem hier gezeigten Beispiel abweichen.'),
@@ -43,6 +70,37 @@ $GLOBALS['TL_LANG']['XPL'] = array(
 													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;RgbaKategorietext ?&gt;</code>'),
 													array('Ausgabe im Template<span style="color:rgba(255,0,0,1.0);">*</span>:', '<code class="language-php">rgba(0,0,0,1.0)</code><br><br><span style="color:rgba(255,0,0,1.0);">*</span><code class="language-php">&nbsp;0,0,0</code> steht in diesem Fall für die Farbe und <code class="language-php">1.0</code> für die Transparenz der Farbe.<br>Diese Werte können je nach gewählter Farbe und Transparenz von dem hier gezeigten Beispiel abweichen.'),
 													array('Das ändern Sie mit dieser Einstellung:', '<img src="bundles/mailwurmbelegungsplan/Text-Kategoriezeile-Belegungsplan.gif" alt="">')
+												),
+	'belegungsplan_anzeige_linkKategorie'	=> array
+												(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;LinkKategorie ?&gt;</code>'),
+													array('Ausgabe im Template:', '<code class="language-php">true</code> oder <code class="language-php">false</code>')
+												),
+	'belegungsplan_color_linkKategorie'		=> array
+												(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;RgbaLinkKategorie ?&gt;</code>'),
+													array('Ausgabe im Template<span style="color:rgba(255,0,0,1.0);">*</span>:', '<code class="language-php">rgba(102,16,242,1.0)</code><br><br><span style="color:rgba(255,0,0,1.0);">*</span><code class="language-php">&nbsp;102,16,242</code> steht in diesem Fall für die Farbe und <code class="language-php">1.0</code> für die Transparenz der Farbe.<br>Diese Werte können je nach gewählter Farbe und Transparenz von dem hier gezeigten Beispiel abweichen.'),
+												),
+	'belegungsplan_kategorieDecorationLine'	=> array
+												(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;KategorieDecorationLine ?&gt;</code>'),
+													array('Ausgabe im Template:', '<code class="language-php">text-decoration: none;</code> <br> <code class="language-php">text-decoration: underline;</code> <br> <code class="language-php">text-decoration: overline;</code> <br> <code class="language-php">text-decoration: line-through;</code> <br> <code class="language-php">text-decoration: underline overline;</code> <br> <code class="language-php">text-decoration: underline overline line-through;</code>'),
+													array('none', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-None.jpg" alt="">'),
+													array('underline', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Underline.jpg" alt="">'),
+													array('overline', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Overline.jpg" alt="">'),
+													array('line-through', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Line-Through.jpg" alt="">'),
+													array('underline overline', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Underline-Overline.jpg" alt="">'),
+													array('underline overline line-through', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Line-Underline-Overline-Line-Through.jpg" alt="">')
+												),
+	'belegungsplan_kategorieDecorationStyle'=> array
+												(
+													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;KategorieDecorationStyle ?&gt;</code>'),
+													array('Ausgabe im Template<span style="color:rgba(255,0,0,1.0);">*</span>:', '<code class="language-php">text-decoration-style: solid;</code> <br> <code class="language-php">text-decoration-style: double;</code> <br> <code class="language-php">text-decoration-style: dotted;</code> <br> <code class="language-php">text-decoration-style: dashed;</code> <br> <code class="language-php">text-decoration-style: wavy;</code><br><br><span style="color:rgba(255,0,0,1.0);">*</span> Wird nur ausgegeben, wenn <code>text-decoration</code> nicht auf <code>none</code> eingestellt ist.'),
+													array('solid', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Solid.jpg" alt="">'),
+													array('double', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Double.jpg" alt="">'),
+													array('dotted', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Dotted.jpg" alt="">'),
+													array('dashed', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Dashed.jpg" alt="">'),
+													array('wavy', '<img src="bundles/mailwurmbelegungsplan/Text-Decoration-Style-Wavy.jpg" alt="">')
 												),
 	'belegungsplan_anzeige_legende'			=> array(
 													array('Variable im Template:', '<code class="language-php">&lt;?= $this-&gt;AnzeigeLegende ?&gt;</code>'),
