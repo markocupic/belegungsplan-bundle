@@ -6,8 +6,8 @@
 				<target>Informationen zum Belegungsplan-Bundle für Contao</target>
 			</trans-unit>
 			<trans-unit id="tl_beleginfo.version">
-				<source>You are currently using version v.4.0.0</source>
-				<target>Sie verwenden aktuell die Version v.4.0.0</target>
+				<source>You are currently using version v.4.0.2</source>
+				<target>Sie verwenden aktuell die Version v.4.0.2</target>
 			</trans-unit>
 			<trans-unit id="tl_beleginfo.thanks">
 				<source>Thank you for your feedback, which I receive almost daily, and also a big thank you to my supporters, be it financial or otherwise.</source>
