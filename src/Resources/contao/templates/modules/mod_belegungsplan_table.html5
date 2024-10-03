@@ -7,12 +7,30 @@
 		background-color:<?= $this->RgbaKategorie ?>;
 		color:<?= $this->RgbaKategorietext ?>;
 	}
+	<?php if($this->LinkKategorie): ?>
+	tr.belegCategory>th>a {
+		color:<?= $this->RgbaLinkKategorie ?>;
+		<?= $this->KategorieDecorationLine ?>
+	<?php if($this->LineKategorieNone != 'none'): ?>
+		<?= $this->KategorieDecorationStyle ?>
+	<?php endif; ?>
+	}
+	<?php endif; ?>
 <?php endif; ?>
 <?php if($this->AnzeigeWochenende): ?>
 	.belegungsplan-table>thead>tr>th.saturday,
 	.belegungsplan-table>thead>tr>th.sunday {
 		background-color:<?= $this->RgbaBgWochenende ?>;
 		color:<?= $this->RgbaWochenendetext ?>;
+	}
+<?php endif; ?>
+<?php if($this->LinkText): ?>
+	.belegungsplan-table>tbody>tr.belegObjekt>td>a {
+		color:<?= $this->RgbaLinkText ?>;
+		<?= $this->TextDecorationLine ?>
+	<?php if($this->LineNone != 'none'): ?>
+		<?= $this->TextDecorationStyle ?>
+	<?php endif; ?>
 	}
 <?php endif; ?>
 	.belegungsplan-table {
