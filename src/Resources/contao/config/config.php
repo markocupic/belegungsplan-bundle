@@ -15,18 +15,28 @@
 $arrBeleg1 = array(
 	'beleg' => array
 	(
-		'belegung' => array
+		'belegung'	=> array
 		(
-			'tables'      => array('tl_belegungsplan_category', 'tl_belegungsplan_objekte', 'tl_belegungsplan_calender')
+			'tables'	=> array('tl_belegungsplan_category', 'tl_belegungsplan_objekte', 'tl_belegungsplan_calender')
 		),
 		'feiertage' => array
 		(
-			'tables'      => array('tl_belegungsplan_feiertage')
+			'tables'	=> array('tl_belegungsplan_feiertage')
+		),
+		'belegungsinfo'	=> array
+		(
+			'callback'	=> 'Mailwurm\Belegung\ModuleBelegungsinfo'
 		)
 	)
 );
 $arrBeleg2 = $GLOBALS['BE_MOD'];
 $GLOBALS['BE_MOD'] = array_merge($arrBeleg1, $arrBeleg2);
+
+// Belegungsinfo
+$GLOBALS['TL_BELEGUNGSINFO'] = array
+(
+	'Mailwurm\Belegung\Belegungsinfo'
+);
 
 /**
  * Front end modules
