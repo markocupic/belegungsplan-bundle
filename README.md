@@ -20,7 +20,7 @@ Keine neue Version verpassen mit dem [**Versions - Newsletter**](https://belegun
 
 ### v4.0.0 (03.10.2024)
 
-#### Wichtig: Da es sich um ein großes Update handelt, erstellen Sie bitte eine Sicherungskopie ihrer Datenbank und ihrer Contao-Installation.
+#### Wichtig: Da es sich um ein großes Update handelt, erstellen Sie bitte eine Sicherungskopie ihrer Datenbank und ihrer Contao-Installation. Es müssen eventuell Einstellungen geändert werden.
 
 #### Anzeige-Einstellungen:
 - Auswahlmöglichkeit Standard nach Belegzeiten, Ausgabe nach Anzahl von Monaten, Ausgabe nach individuellem Zeitraum
