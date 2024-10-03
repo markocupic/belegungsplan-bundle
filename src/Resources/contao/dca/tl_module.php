@@ -8,7 +8,10 @@
  *
  * @author Jan Karai <https://www.sachsen-it.de>
  */
- 
+/**
+ * onload_callback prueft beim Laden des Modul ob Felder auf disabled gesetzt werden muessen
+ */
+$GLOBALS['TL_DCA']['tl_module']['config']['onload_callback'][] = array('tl_module_belegungsplan', 'setDisabled');
 /**
  * Add palettes to tl_module
  */
@@ -17,13 +20,15 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_a
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_anzeige_legende';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_anzeige_wochenende';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_showAusgabe';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_anzeige_linkText';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_anzeige_linkKategorie';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['default'] = '	{title_legend},name,headline,type;{config_legend},belegungsplan_categories;
 															{anzeige_legend},belegungsplan_showAusgabe;
 															{color_legend_frei:hide},belegungsplan_color_frei,belegungsplan_opacity_frei,belegungsplan_reset_frei;
 															{color_legend_belegt:hide},belegungsplan_color_belegt,belegungsplan_opacity_belegt,belegungsplan_reset_belegt;
-															{text_legend:hide},belegungsplan_color_text,belegungsplan_opacity_text,belegungsplan_reset_text;
+															{text_legend:hide},belegungsplan_color_text,belegungsplan_opacity_text,belegungsplan_reset_text,belegungsplan_anzeige_linkText;
 															{rahmen_legend:hide},belegungsplan_color_rahmen,belegungsplan_opacity_rahmen,belegungsplan_reset_rahmen;
-															{kategorie_legend:hide},belegungsplan_anzeige_kategorie;
+															{kategorie_legend:hide},belegungsplan_anzeige_kategorie,belegungsplan_anzeige_linkKategorie;
 															{legende_legend:hide},belegungsplan_anzeige_legende;
 															{wochenende_legend:hide},belegungsplan_anzeige_wochenende;
 															{template_legend},belegungsplan_template;
@@ -31,6 +36,8 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['default'] = '	{title_legend},name,h
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_showAusgabe_standard'] = 'belegungsplan_month';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_showAusgabe_automatic'] = 'belegungsplan_anzahlMonate';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_showAusgabe_individuell'] = 'belegungsplan_individuellMonateStart,belegungsplan_individuellMonateEnde';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_anzeige_linkText'] = 'belegungsplan_color_linkText,belegungsplan_opacity_linkText,belegungsplan_textDecorationLine,belegungsplan_textDecorationStyle,belegungsplan_reset_linkText';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_anzeige_linkKategorie'] = 'belegungsplan_color_linkKategorie,belegungsplan_opacity_linkKategorie,belegungsplan_kategorieDecorationLine,belegungsplan_kategorieDecorationStyle,belegungsplan_reset_linkKategorie';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_anzeige_kategorie'] = 'belegungsplan_color_kategorie,belegungsplan_opacity_kategorie,belegungsplan_reset_kategorie,belegungsplan_color_kategorietext,belegungsplan_opacity_kategorietext,belegungsplan_reset_kategorietext';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_anzeige_legende'] = 'belegungsplan_color_legende_frei,belegungsplan_color_legende_belegt,belegungsplan_opacity_legende,belegungsplan_reset_legende';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_anzeige_wochenende'] = 'belegungsplan_bgcolor_wochenende,belegungsplan_opacity_bg_wochenende,belegungsplan_reset_bg_wochenende,belegungsplan_color_wochenendetext,belegungsplan_opacity_wochenendetext,belegungsplan_reset_wochenendetext';
@@ -53,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_showAusgabe'] = array(
 	'reference'				=> &$GLOBALS['TL_LANG']['tl_module'],
 	'explanation'			=> 'belegungsplan_showAusgabe',
 	'eval'					=> array('mandatory'=>true, 'submitOnChange'=>true, 'tl_class'=>'w50', 'style'=>'margin:10px', 'helpwizard'=>true),
-	'sql'					=> "varchar(11) NOT NULL default 'standard'"
+	'sql'					=> "varchar(11) NOT NULL default ''"
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_month'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_month'],
@@ -84,13 +91,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_individuellMonateEnde']
 	'inputType'				=> 'MonthYearWizard',
 	'options'				=> $GLOBALS['TL_LANG']['tl_module']['belegungsplan_month']['month'],
 	'eval'					=> array('rgxp'=>'natural', 'mandatory'=>true, 'maxlength'=>4, 'tl_class'=>'w25 m12', 'style'=>'width:120px;margin-left:15px', 'placeholder'=>$GLOBALS['TL_LANG']['tl_module']['jahr']),
-	'save_callback'	=> array
+	'save_callback'			=> array
 	(
 		array('tl_module_belegungsplan','verifyEndDate')
 	),
 	'sql'					=> "varchar(255) NOT NULL default ''"
 );
-// --------------------------------------------------------------------------------------------
+// ------------------------- Farbauswahl freie Tage -------------------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_frei'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_frei'],
 	'exclude'				=> true,
@@ -108,22 +115,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_frei'] = array(
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_frei'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_frei'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-// --------------------------------------------------------------------------------------------
+// ------------------------- Farbauswahl belegte Tage -------------------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_belegt'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_belegt'],
 	'exclude'				=> true,
@@ -141,23 +146,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_belegt'] = array(
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_belegt'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_belegt'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-// --------------------------------------------------------------------------------------------
-
+// -------------------------- Eigener Text ------------------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_text'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_text'],
 	'exclude'				=> true,
@@ -168,30 +170,85 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_text'] = array(
 	(
 		array('tl_module_belegungsplan','setRgbToHex')
 	),
-	'eval'					=> array('maxlength'=>6, 'minlength'=>6, 'mandatory'=>true, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w25 wizard', 'helpwizard'=>true),
+	'eval'					=> array('maxlength'=>6, 'minlength'=>6, 'mandatory'=>true, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w15 wizard', 'helpwizard'=>true),
 	'save_callback'			=> array
 	(
 		array('tl_module_belegungsplan','setHexToRgb')
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_text'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_text'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-
-// --------------------------------------------------------------------------------------------
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_linkText'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_anzeige_linkText'],
+	'exclude'				=> true,
+	'inputType'				=> 'checkbox',
+	'explanation'			=> 'belegungsplan_anzeige_linkText',
+	'eval'					=> array('submitOnChange'=>true, 'tl_class'=>'w50 m12 wizard clr', 'helpwizard'=>true),
+	'sql'					=> "char(1) COLLATE ascii_bin NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_linkText'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_linkText'],
+	'exclude'				=> true,
+	'inputType'				=> 'text',
+	'default'				=> '102,16,242',
+	'explanation'			=> 'belegungsplan_color_linkText',
+	'load_callback'			=> array
+	(
+		array('tl_module_belegungsplan','setRgbToHex')
+	),
+	'eval'					=> array('maxlength'=>6, 'minlength'=>6, 'mandatory'=>true, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w15 wizard', 'helpwizard'=>true),
+	'save_callback'			=> array
+	(
+		array('tl_module_belegungsplan','setHexToRgb')
+	),
+	'sql'					=> "varchar(20) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_linkText'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
+	'exclude'				=> true,
+	'inputType'				=> 'select',
+	'default'				=> '1.0',
+	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
+	'eval'					=> array('tl_class'=>'w15'),
+	'sql'					=> "varchar(3) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_textDecorationLine'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_textDecorationLine'],
+	'exclude'				=> true,
+	'inputType'				=> 'select',
+	'default'				=> 'none',
+	'explanation'			=> 'belegungsplan_textDecorationLine',
+	'options'				=> array('none', 'underline', 'overline', 'line-through', 'underline overline', 'underline overline line-through'),
+	'eval'					=> array('tl_class'=>'w15', 'helpwizard'=>true, 'submitOnChange'=>true),
+	'sql'					=> "varchar(32) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_textDecorationStyle'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_textDecorationStyle'],
+	'exclude'				=> true,
+	'inputType'				=> 'select',
+	'default'				=> 'solid',
+	'explanation'			=> 'belegungsplan_textDecorationStyle',
+	'options'				=> array('solid', 'double', 'dotted', 'dashed', 'wavy'),
+	'eval'					=> array('tl_class'=>'w15', 'helpwizard'=>true),
+	'sql'					=> "varchar(8) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_linkText'] = array(
+	'eval'					=> array('submitOnChange'=>true),
+	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
+);
+// -------------------------- Rahmen Einstellungen ------------------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_rahmen'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_rahmen'],
 	'exclude'				=> true,
@@ -209,22 +266,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_rahmen'] = array(
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_rahmen'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_rahmen'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-// --------------------------------------------------------------------------------------------
+// ------------------------- Kategorie Einstellungen -------------------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_kategorie'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_anzeige_kategorie'],
 	'exclude'				=> true,
@@ -232,9 +287,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_kategorie'] = a
 	'default'				=> '1',
 	'explanation'			=> 'belegungsplan_anzeige_kategorie',
 	'eval'					=> array('submitOnChange'=>true, 'tl_class'=>'w50 wizard', 'helpwizard'=>true),
-	'sql'					=> "char(1) NOT NULL default ''"
+	'sql'					=> "char(1) COLLATE ascii_bin NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_kategorie'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_kategorie'],
 	'exclude'				=> true,
@@ -252,22 +306,19 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_kategorie'] = arr
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_kategorie'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_kategorie'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_kategorietext'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_kategorietext'],
 	'exclude'				=> true,
@@ -285,22 +336,78 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_kategorietext'] =
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_kategorietext'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_kategorietext'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-// --------------------------------------------------------------------------------------------
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_linkKategorie'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_anzeige_linkKategorie'],
+	'exclude'				=> true,
+	'inputType'				=> 'checkbox',
+	'explanation'			=> 'belegungsplan_anzeige_linkKategorie',
+	'eval'					=> array('submitOnChange'=>true, 'tl_class'=>'w50 m12 wizard clr', 'helpwizard'=>true),
+	'sql'					=> "char(1) COLLATE ascii_bin NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_linkKategorie'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_linkKategorie'],
+	'exclude'				=> true,
+	'inputType'				=> 'text',
+	'default'				=> '102,16,242',
+	'explanation'			=> 'belegungsplan_color_linkKategorie',
+	'load_callback'			=> array
+	(
+		array('tl_module_belegungsplan','setRgbToHex')
+	),
+	'eval'					=> array('maxlength'=>6, 'minlength'=>6, 'mandatory'=>true, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w15 wizard', 'helpwizard'=>true),
+	'save_callback'			=> array
+	(
+		array('tl_module_belegungsplan','setHexToRgb')
+	),
+	'sql'					=> "varchar(20) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_linkKategorie'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
+	'exclude'				=> true,
+	'inputType'				=> 'select',
+	'default'				=> '1.0',
+	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
+	'eval'					=> array('tl_class'=>'w15'),
+	'sql'					=> "varchar(3) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_kategorieDecorationLine'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_kategorieDecorationLine'],
+	'exclude'				=> true,
+	'inputType'				=> 'select',
+	'default'				=> 'none',
+	'explanation'			=> 'belegungsplan_kategorieDecorationLine',
+	'options'				=> array('none', 'underline', 'overline', 'line-through', 'underline overline', 'underline overline line-through'),
+	'eval'					=> array('tl_class'=>'w15', 'helpwizard'=>true, 'submitOnChange'=>true),
+	'sql'					=> "varchar(32) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_kategorieDecorationStyle'] = array(
+	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_kategorieDecorationStyle'],
+	'exclude'				=> true,
+	'inputType'				=> 'select',
+	'default'				=> 'solid',
+	'explanation'			=> 'belegungsplan_kategorieDecorationStyle',
+	'options'				=> array('solid', 'double', 'dotted', 'dashed', 'wavy'),
+	'eval'					=> array('tl_class'=>'w15', 'helpwizard'=>true),
+	'sql'					=> "varchar(8) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_linkKategorie'] = array(
+	'eval'					=> array('submitOnChange'=>true),
+	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
+);
+// ------------------------- Legende Einstellungen -------------------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_legende'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_anzeige_legende'],
 	'exclude'				=> true,
@@ -308,9 +415,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_legende'] = arr
 	'default'				=> '1',
 	'explanation'			=> 'belegungsplan_anzeige_legende',
 	'eval'					=> array('submitOnChange'=>true, 'tl_class'=>'w50 wizard', 'helpwizard'=>true),
-	'sql'					=> "char(1) NOT NULL default ''"
+	'sql'					=> "char(1) COLLATE ascii_bin NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_legende_frei'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_legende_frei'],
 	'exclude'				=> true,
@@ -328,7 +434,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_legende_frei'] = 
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_legende_belegt'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_legende_belegt'],
 	'exclude'				=> true,
@@ -346,22 +451,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_legende_belegt'] 
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_legende'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25 wizard'),
+	'eval'					=> array('tl_class'=>'w15 wizard'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_legende'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-// ----------WOCHENENDE------------------------------------------------------------------------
-
+// ------------------------- Wochenende Einstellungen ---------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_wochenende'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_anzeige_wochenende'],
 	'exclude'				=> true,
@@ -369,9 +472,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_anzeige_wochenende'] = 
 	'default'				=> '1',
 	'explanation'			=> 'belegungsplan_anzeige_wochenende',
 	'eval'					=> array('submitOnChange'=>true, 'tl_class'=>'w50 wizard', 'helpwizard'=>true),
-	'sql'					=> "char(1) NOT NULL default ''"
+	'sql'					=> "char(1) COLLATE ascii_bin NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_bgcolor_wochenende'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_bgcolor_wochenende'],
 	'exclude'				=> true,
@@ -389,22 +491,19 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_bgcolor_wochenende'] = 
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_bg_wochenende'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_bg_wochenende'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_wochenendetext'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_color_wochenendetext'],
 	'exclude'				=> true,
@@ -422,22 +521,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_color_wochenendetext'] 
 	),
 	'sql'					=> "varchar(20) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_opacity_wochenendetext'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_opacity'],
 	'exclude'				=> true,
 	'inputType'				=> 'select',
 	'default'				=> '1.0',
 	'options'				=> array('1.0','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1'),
-	'eval'					=> array('tl_class'=>'w25'),
+	'eval'					=> array('tl_class'=>'w15'),
 	'sql'					=> "varchar(3) NOT NULL default ''"
 );
-
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_reset_wochenendetext'] = array(
 	'eval'					=> array('submitOnChange'=>true),
 	'input_field_callback'	=> array('tl_module_belegungsplan', 'setResetButton')
 );
-// --------------------------------------------------------------------------------------------
+// ------------------------- Template-Einstellungen -------------------------------------------------------------------
 $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_template'] = array(
 	'label'					=> &$GLOBALS['TL_LANG']['tl_module']['belegungsplan_template'],
 	'exclude'				=> true,
@@ -564,7 +661,24 @@ class tl_module_belegungsplan extends Backend
 				</div>';
 	}
 	/**
+	 * onload_callback: Fuehrt eine Aktion bei der Initialisierung des DataContainer-Objekts aus.
+	 * Setz das Auswahlfeld von text-decoration-style auf disabled, wenn bei text-decoration-line none ausgewaehlt wurde
+	 * @param DataContainer $dc
 	 *
+	 */
+	public function setDisabled(DataContainer $dc)
+	{	
+		$objDecorationLine = $this->Database->prepare("SELECT belegungsplan_textDecorationLine, belegungsplan_kategorieDecorationLine
+											FROM tl_module
+											WHERE type = ?
+											AND id = ?")
+						->execute('belegungsplan', $dc->id);
+		(empty($objDecorationLine->belegungsplan_textDecorationLine) || $objDecorationLine->belegungsplan_textDecorationLine == 'none') ? $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_textDecorationStyle']['eval']['disabled'] = true : $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_textDecorationStyle']['eval']['disabled'] = false;
+		(empty($objDecorationLine->belegungsplan_kategorieDecorationLine) || $objDecorationLine->belegungsplan_kategorieDecorationLine == 'none') ? $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_kategorieDecorationStyle']['eval']['disabled'] = true : $GLOBALS['TL_DCA']['tl_module']['fields']['belegungsplan_kategorieDecorationStyle']['eval']['disabled'] = false;
+	}
+	/**
+	 * Array mit Standardwerten, wenn Reset-Button gedrueckt wird
+	 * 
 	 * @param string $strInputName
 	 *
 	 * @return array
@@ -576,6 +690,8 @@ class tl_module_belegungsplan extends Backend
 			'belegungsplan_reset_frei'				=> array('belegungsplan_color_frei', '76,174,76', 'belegungsplan_opacity_frei', '1.0'),
 			'belegungsplan_reset_belegt'			=> array('belegungsplan_color_belegt', '212,63,58', 'belegungsplan_opacity_belegt', '1.0'),
 			'belegungsplan_reset_text'				=> array('belegungsplan_color_text', '51,51,51', 'belegungsplan_opacity_text', '1.0'),
+			'belegungsplan_reset_linkText'			=> array('belegungsplan_color_linkText', '102,16,242', 'belegungsplan_opacity_linkText', '1.0', 'belegungsplan_textDecorationLine', 'none'),
+			'belegungsplan_reset_linkKategorie'		=> array('belegungsplan_color_linkKategorie', '102,16,242', 'belegungsplan_opacity_linkKategorie', '1.0', 'belegungsplan_kategorieDecorationLine', 'none'),
 			'belegungsplan_reset_rahmen'			=> array('belegungsplan_color_rahmen', '221,221,221', 'belegungsplan_opacity_rahmen', '1.0'),
 			'belegungsplan_reset_kategorie'			=> array('belegungsplan_color_kategorie', '204,204,204', 'belegungsplan_opacity_kategorie', '1.0'),
 			'belegungsplan_reset_kategorietext'		=> array('belegungsplan_color_kategorietext', '0,0,0', 'belegungsplan_opacity_kategorietext', '1.0'),
