@@ -27,6 +27,7 @@ Keine neue Version verpassen mit dem [**Versions - Newsletter**](https://belegun
 - Je nach Auswahl Monatsliste, Eingabe Monatsanzahl oder Eingabe Zeitraum für Start und Ende der Anzeige
 - dafür Anpassungen in den Templates, Sprachenfiles, Datenbank
 - Änderung der Breiten der Eingabefelder
+- Neues Template mod_belegungsplan_table hinzugefügt
 #### Eigener Text:
 - Link-Einstellungen Linkfarbe, Farbtransparenz, text-decoration, text-decoration-style hinzugefügt
 #### Erstellung Kategorie:
