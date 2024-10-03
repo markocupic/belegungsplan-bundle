@@ -19,6 +19,9 @@ Keine neue Version verpassen mit dem [**Versions - Newsletter**](https://belegun
 ## Der neueste Changelog
 
 ### v4.0.0 (03.10.2024)
+
+#### Wichtig: Da es sich um ein großes Update handelt, erstellen Sie bitte eine Sicherungskopie ihrer Datenbank und ihrer Contao-Installation.
+
 #### Anzeige-Einstellungen:
 - Auswahlmöglichkeit Standard nach Belegzeiten, Ausgabe nach Anzahl von Monaten, Ausgabe nach individuellem Zeitraum
 - Je nach Auswahl Monatsliste, Eingabe Monatsanzahl oder Eingabe Zeitraum für Start und Ende der Anzeige
