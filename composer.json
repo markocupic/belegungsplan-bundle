@@ -66,6 +66,5 @@
     ],
     "extra": {
         "contao-manager-plugin": "Mailwurm\\BelegungsplanBundle\\ContaoManager\\Plugin"
-    },
-    "version": "1.0"
+    }
 }
