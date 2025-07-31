@@ -1,70 +1,76 @@
 <?php
-/**
- * Contao Open Source CMS
+
+declare(strict_types=1);
+
+/*
+ * Contao Open Source CMS.
  *
  * Copyright (c) Jan Karai
  *
  * @license LGPL-3.0-or-later
- *
- * @author Jan Karai <https://www.sachsen-it.de>
  */
- 
+
+use Contao\ArrayUtil;
+use Contao\CoreBundle\Routing\ScopeMatcher;
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
- * Add back end modules
+ * Add back end modules.
  */
-$arrBeleg1 = array(
-	'beleg' => array
-	(
-		'belegung'	=> array
-		(
-			'tables'	=> array('tl_belegungsplan_category', 'tl_belegungsplan_objekte', 'tl_belegungsplan_calender')
-		),
-		'feiertage' => array
-		(
-			'tables'	=> array('tl_belegungsplan_feiertage')
-		),
-		'belegungsinfo'	=> array
-		(
-			'callback'	=> 'Mailwurm\Belegung\ModuleBelegungsinfo'
-		)
-	)
-);
+$arrBeleg1 = [
+    'beleg' => [
+        'belegung' => [
+            'tables' => ['tl_belegungsplan_category', 'tl_belegungsplan_objekte', 'tl_belegungsplan_calender'],
+        ],
+        'feiertage' => [
+            'tables' => ['tl_belegungsplan_feiertage'],
+        ],
+        'belegungsinfo' => [
+            'callback' => 'Mailwurm\Belegung\ModuleBelegungsinfo',
+        ],
+    ],
+];
 $arrBeleg2 = $GLOBALS['BE_MOD'];
 $GLOBALS['BE_MOD'] = array_merge($arrBeleg1, $arrBeleg2);
 
 // Belegungsinfo
-$GLOBALS['TL_BELEGUNGSINFO'] = array
-(
-	'Mailwurm\Belegung\Belegungsinfo'
-);
+$GLOBALS['TL_BELEGUNGSINFO'] =
+    [
+        'Mailwurm\Belegung\Belegungsinfo',
+    ];
 
-/**
+/*
  * Front end modules
  */
-array_insert($GLOBALS['FE_MOD'], 99, array
-(
-	'belegung' => array
-	(
-		'belegungsplan'   => 'Mailwurm\Belegung\ModuleBelegungsplan'
-	)
-));
-/**
+ArrayUtil::arrayInsert(
+    $GLOBALS['FE_MOD'],
+    99,
+    [
+        'belegung' => [
+            'belegungsplan' => 'Mailwurm\Belegung\ModuleBelegungsplan',
+        ],
+    ],
+);
+/** @var ScopeMatcher $scopeMatcher */
+$scopeMatcher = System::getContainer()->get('contao.routing.scope_matcher');
+/** @var Request|null $request */
+$request = System::getContainer()->get('request_stack')?->getCurrentRequest();
+
+/*
  * Style sheet Backend
  */
-if (TL_MODE == 'BE')
-{
-	$GLOBALS['TL_CSS'][] = 'bundles/mailwurmbelegungsplan/style.css|static';
+if (!empty($request) && $scopeMatcher->isBackendRequest($request)) {
+    $GLOBALS['TL_CSS'][] = 'bundles/mailwurmbelegungsplan/style.css|static';
 }
-/**
+
+/*
  * Style sheet Frontend
  */
-if (TL_MODE == 'FE')
-{
-	$GLOBALS['TL_CSS'][] = 'bundles/mailwurmbelegungsplan/belegungsplan.css|static';
+if (!empty($request) && $scopeMatcher->isFrontendRequest($request)) {
+    $GLOBALS['TL_CSS'][] = 'bundles/mailwurmbelegungsplan/belegungsplan.css|static';
 }
-/**
+/*
  * Backend form fields
  */
-$GLOBALS['BE_FFL']['checkBoxWithoutDragAndDropWizard'] = 'Mailwurm\Belegung\CheckBoxWithoutDragAndDropWizard';
-$GLOBALS['BE_FFL']['checkBoxWithDragAndDropWizard'] = 'Mailwurm\Belegung\CheckBoxWithDragAndDropWizard';
 $GLOBALS['BE_FFL']['MonthYearWizard'] = 'Mailwurm\Belegung\MonthYearWizard';

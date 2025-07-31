@@ -1,61 +1,58 @@
 <?php
-/**
- * Contao Open Source CMS
+
+declare(strict_types=1);
+
+/*
+ * Contao Open Source CMS.
  *
  * Copyright (c) Jan Karai
  *
  * @license LGPL-3.0-or-later
- *
- * @author Jan Karai <https://www.sachsen-it.de>
  */
+
 namespace Mailwurm\Belegung;
+
+use Contao\BackendModule;
+use Contao\StringUtil;
 use Contao\System;
+
 /**
- * Class ModuleBelegungsinfo
- *
+ * Class ModuleBelegungsinfo.
  */
-class ModuleBelegungsinfo extends \BackendModule
+class ModuleBelegungsinfo extends BackendModule
 {
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected $strTemplate = 'be_belegungsinfo';
+    /**
+     * Template.
+     *
+     * @var string
+     */
+    protected $strTemplate = 'be_belegungsinfo';
 
-	/**
-	 * Generate the module
-	 *
-	 * @throws \Exception
-	 */
-	protected function compile()
-	{
-		System::loadLanguageFile('tl_beleginfo');
+    /**
+     * Generate the module.
+     *
+     * @throws \Exception
+     */
+    protected function compile(): void
+    {
+        System::loadLanguageFile('tl_beleginfo');
 
-		$this->Template->content = '';
-		$this->Template->href = $this->getReferer(true);
-		$this->Template->title = \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']);
-		$this->Template->button = $GLOBALS['TL_LANG']['MSC']['backBT'];
+        $this->Template->content = '';
+        $this->Template->href = $this->getReferer(true);
+        $this->Template->title = StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['backBTTitle']);
+        $this->Template->button = $GLOBALS['TL_LANG']['MSC']['backBT'];
 
-		foreach ($GLOBALS['TL_BELEGUNGSINFO'] as $callback)
-		{
-			$this->import($callback);
+        foreach ($GLOBALS['TL_BELEGUNGSINFO'] as $callback) {
+            $this->import($callback);
 
-			if (!$this->$callback instanceof \executable)
-			{
-				throw new \Exception("$callback is not an executable class");
-			}
+            $buffer = $this->$callback->run();
 
-			$buffer = $this->$callback->run();
+            if ($this->$callback->isActive()) {
+                $this->Template->content = $buffer;
+                break;
+            }
 
-			if ($this->$callback->isActive())
-			{
-				$this->Template->content = $buffer;
-				break;
-			}
-
-			$this->Template->content .= $buffer;
-		}
-	}
+            $this->Template->content .= $buffer;
+        }
+    }
 }
-
-class_alias(ModuleBelegungsinfo::class, 'ModuleBelegungsinfo');

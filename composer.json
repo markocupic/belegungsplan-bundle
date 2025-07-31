@@ -12,10 +12,9 @@
         }
     ],
     "require": {
-        "php": "^7.0|^8.0",
+        "php": "^7.0 || ^8.0",
         "symfony/http-kernel": ">=3.3",
-        "contao/core-bundle": "^4.4.2",
-	"patchwork/utf8": ">=v1.3.3"
+        "contao/core-bundle": "^4.4 || ^5.0"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0",
@@ -67,5 +66,6 @@
     ],
     "extra": {
         "contao-manager-plugin": "Mailwurm\\BelegungsplanBundle\\ContaoManager\\Plugin"
-    }
+    },
+    "version": "1.0"
 }
