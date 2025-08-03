@@ -394,9 +394,8 @@ class ModuleBelegungsplan extends Module
      *
      * @return string
      */
-    protected function includeCalender($intBuchungsStartJahr, $intBuchungsEndeJahr, $intY, array|null $arrCategoriesObjekte, $z)
+    protected function includeCalender($intBuchungsStartJahr, $intBuchungsEndeJahr, $intY, $arrCategoriesObjekte, $z): string
     {
-        $strReturn = '';
         $intBuchungJahr = empty($z) ? (int) $intBuchungsStartJahr : (int) $intBuchungsEndeJahr;
         // bei Jahresuebergreifender Buchung
         if ((int) $intBuchungsStartJahr !== (int) $intBuchungsEndeJahr) {
