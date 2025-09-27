@@ -25,7 +25,8 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_a
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_showAusgabe';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_anzeige_linkText';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'belegungsplan_anzeige_linkKategorie';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['default'] = '
+
+$GLOBALS['TL_DCA']['tl_module']['palettes']['belegungsplan'] = '
 	{title_legend},name,headline,type;{config_legend},belegungsplan_categories;
 	{anzeige_legend},belegungsplan_showAusgabe;
 	{color_legend_frei:hide},belegungsplan_color_frei,belegungsplan_opacity_frei,belegungsplan_reset_frei;
@@ -38,6 +39,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['default'] = '
 	{template_legend},belegungsplan_template;
 	{expert_legend:hide},cssID
 	';
+
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_showAusgabe_standard'] = 'belegungsplan_month';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_showAusgabe_automatic'] = 'belegungsplan_anzahlMonate';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['belegungsplan_showAusgabe_individuell'] = 'belegungsplan_individuellMonateStart,belegungsplan_individuellMonateEnde';
